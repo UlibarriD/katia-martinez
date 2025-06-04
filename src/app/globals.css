@@ -1,26 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tw-animate-css";
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-heading: "Playfair Display", Georgia, serif; /* Serif elegante para títulos */
+  --font-body: "Raleway", system-ui, sans-serif; /* Sans-serif legible para textos */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.625rem;
+
+  /* Escala de rojos para el esquema de colores */
+  --background: oklch(0.98 0.03 30); /* Blanco con ligero tinte rojo */
+  --foreground: oklch(0.23 0.12 25); /* Rojo muy oscuro para texto */
+
+  --card: oklch(0.97 0.02 30);
+  --card-foreground: oklch(0.23 0.12 25);
+
+  --popover: oklch(0.97 0.02 30);
+  --popover-foreground: oklch(0.23 0.12 25);
+
+  --primary: oklch(0.27 0.15 25); /* Tinto oscuro (principal) */
+  --primary-foreground: oklch(0.98 0.02 30); /* Blanco roto para contraste */
+
+  --secondary: oklch(0.9 0.08 25); /* Rojo pálido */
+  --secondary-foreground: oklch(0.23 0.12 25); /* Rojo oscuro */
+
+  --muted: oklch(0.93 0.05 25); /* Rojo muy pálido */
+  --muted-foreground: oklch(0.45 0.1 25); /* Rojo medio */
+
+  --accent: oklch(0.85 0.12 25); /* Rojo medio-claro */
+  --accent-foreground: oklch(0.23 0.12 25); /* Rojo oscuro */
+
+  --destructive: oklch(0.6 0.25 25); /* Rojo más vivo para alertas */
+  --destructive-foreground: oklch(0.98 0 0);
+
+  --border: oklch(0.85 0.05 25); /* Rojo pálido para bordes */
+  --input: oklch(0.8 0.07 25); /* Rojo medio para inputs */
+  --ring: oklch(0.7 0.12 25); /* Rojo medio-oscuro para anillos de focus */
+}
+
+@layer base {
+  * {
+    @apply border-border;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: 500;
+  }
 }
