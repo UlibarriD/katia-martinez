@@ -29,15 +29,15 @@ export const SESIONES: Sesion[] = [
 
     imagenes: [
       {
-        src: "/Portada/Katia, Laura y Carmen 1.webp",
+        src: "/Portada/KATIA, LAURA Y CARMEN 1.webp",
         alt: "Portada 1",
       },
       {
-        src: "/Portada/Katia, Laura y Carmen 2.webp",
+        src: "/Portada/KATIA, LAURA Y CARMEN 2.webp",
         alt: "Portada 2",
       },
       {
-        src: "/Portada/Katia, Laura y Carmen 3.webp",
+        src: "/Portada/KATIA, LAURA Y CARMEN 3.webp",
         alt: "Portada 3",
       },
     ],
