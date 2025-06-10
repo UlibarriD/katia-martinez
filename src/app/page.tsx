@@ -1,103 +1,135 @@
+"use client";
+
 import Image from "next/image";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { MasonryGrid } from "@/components/ui/masonry-grid";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { SESIONES } from "@/lib/constants";
+import { Loader } from "@/components/ui/loader";
+import { useEffect, useState } from "react";
+
+// Función para generar ratios consistentes basados en el índice
+function getConsistentRatio(index: number): number {
+  const ratios = [3 / 4, 1, 2 / 3, 4 / 5, 2 / 3, 5 / 7];
+  return ratios[index % ratios.length];
+}
+
+// Crear un array con TODAS las imágenes de todas las sesiones para el bento grid
+// Note: lo movemos dentro del componente para asegurar que el cliente y servidor rendericen igual
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  // Crear el array de imágenes dentro del componente para asegurar consistencia entre cliente y servidor
+  const allImages = SESIONES.flatMap((sesion, sesionIndex) =>
+    sesion.imagenes.map((imagen, index) => ({
+      id: `${sesion.id}-${index}`,
+      src: imagen.src,
+      alt: imagen.alt,
+      ratio: getConsistentRatio(sesionIndex * 10 + index), // Usar función determinista en lugar de Math.random()
+      sessionId: sesion.id, // Mantiene la referencia a qué sesión pertenece cada imagen
+    }))
+  );
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const [imagesLoaded, setImagesLoaded] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const totalImages = allImages.length;
+
+  useEffect(() => {
+    // Reducimos el tiempo mínimo a 1 segundo para mejorar la velocidad percibida
+    const minLoadTimeoutId = setTimeout(() => {
+      if (imagesLoaded >= totalImages) {
+        setIsLoading(false);
+      }
+    }, 1000);
+
+    // Tiempo máximo de espera (3s) para garantizar que la página siempre se muestre
+    const maxLoadTimeoutId = setTimeout(() => {
+      setIsLoading(false);
+      console.log("Carga forzada por timeout máximo en página principal");
+    }, 1100);
+
+    return () => {
+      clearTimeout(minLoadTimeoutId);
+      clearTimeout(maxLoadTimeoutId);
+    };
+  }, [imagesLoaded, totalImages]);
+
+  const handleImageLoad = () => {
+    setImagesLoaded((prev) => {
+      const newCount = prev + 1;
+      // Si hemos cargado todas las imágenes, podemos mostrar el contenido
+      if (newCount >= totalImages) {
+        // Transición suave después de un pequeño delay
+        setTimeout(() => setIsLoading(false), 200);
+      }
+      return newCount;
+    });
+  };
+
+  // Manejar errores de carga de imágenes
+  const handleImageError = () => {
+    // Contar como cargada aunque haya error para no bloquear la UI
+    setImagesLoaded((prev) => prev + 1);
+    console.error("Error al cargar una imagen en la página principal");
+  };
+
+  return (
+    <div className="container mx-auto max-w-6xl px-4 py-16">
+      {isLoading ? (
+        <div className="fixed inset-0 bg-background flex items-center justify-center z-50">
+          <div className="flex flex-col items-center">
+            <Loader size="large" />
+            <p className="mt-4 text-lg">
+              Cargando imágenes... {imagesLoaded} de {totalImages}
+            </p>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      ) : null}
+
+      <div
+        className={`transition-opacity duration-500 ${
+          isLoading ? "opacity-0" : "opacity-100"
+        }`}
+      >
+        <div className="text-center mb-12">
+          <h1 className="font-heading text-3xl md:text-5xl font-bold mb-4">
+            Katia Martínez
+          </h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Fashion Stylist
+          </p>
+        </div>
+
+        <MasonryGrid>
+          {allImages.map((image) => (
+            <Link
+              key={image.id}
+              href={`/proyectos/${image.sessionId}`}
+              className="mb-4 block overflow-hidden rounded-md"
+            >
+              <AspectRatio ratio={image.ratio}>
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  className="object-cover transition-all hover:scale-105 duration-700 ease-in-out"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority={allImages.indexOf(image) < 3} // Prioridad para las primeras tres imágenes
+                  loading={allImages.indexOf(image) < 6 ? "eager" : "lazy"} // Carga anticipada para las primeras 6 imágenes
+                  onLoad={handleImageLoad}
+                  onError={handleImageError}
+                />
+              </AspectRatio>
+            </Link>
+          ))}
+        </MasonryGrid>
+
+        <div className="mt-12 text-center">
+          <Button asChild variant="outline" className="mx-auto">
+            <Link href="/proyectos">Ver todas las proyectos</Link>
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
