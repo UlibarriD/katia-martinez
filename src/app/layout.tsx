@@ -16,8 +16,7 @@ const raleway = Raleway({
 
 export const metadata: Metadata = {
   title: "Katia Martínez | Fotografía Profesional",
-  description:
-    "Portafolio de Katia Martínez, fotógrafa profesional especializada en retratos, sesiones de moda y eventos.",
+  description: "Portafolio de Katia Martínez, Estilista profesional.",
 };
 
 export default function RootLayout({
