@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { ImageWithRetry } from "@/components/ui/image-with-retry";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { MasonryGrid } from "@/components/ui/masonry-grid";
 import { Button } from "@/components/ui/button";
@@ -108,7 +108,7 @@ export default function Home() {
               className="mb-4 block overflow-hidden rounded-md"
             >
               <AspectRatio ratio={image.ratio}>
-                <Image
+                <ImageWithRetry
                   src={image.src}
                   alt={image.alt}
                   className="object-cover transition-all hover:scale-105 duration-700 ease-in-out"
@@ -116,8 +116,9 @@ export default function Home() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   priority={allImages.indexOf(image) < 3} // Prioridad para las primeras tres imágenes
                   loading={allImages.indexOf(image) < 6 ? "eager" : "lazy"} // Carga anticipada para las primeras 6 imágenes
-                  onLoad={handleImageLoad}
-                  onError={handleImageError}
+                  onImageLoad={handleImageLoad}
+                  onImageError={handleImageError}
+                  maxRetries={3}
                 />
               </AspectRatio>
             </Link>

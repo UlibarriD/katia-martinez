@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { ImageWithRetry } from "@/components/ui/image-with-retry";
 import Link from "next/link";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -90,16 +90,17 @@ export default function SesionesPage() {
             <Link href={`/proyectos/${sesion.id}`} key={sesion.id}>
               <Card className="overflow-hidden transition-all duration-300 hover:shadow-md">
                 <AspectRatio ratio={3 / 4}>
-                  <Image
+                  <ImageWithRetry
                     src={sesion.imagenes[0].src}
                     alt={sesion.titulo}
                     fill
                     className="object-cover transition-all hover:scale-105 duration-500"
-                    onLoad={handleImageLoad}
-                    onError={handleImageError}
+                    onImageLoad={handleImageLoad}
+                    onImageError={handleImageError}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     priority={SESIONES.indexOf(sesion) < 4} // Prioriza las primeras 4 imágenes
                     loading={SESIONES.indexOf(sesion) < 4 ? "eager" : "lazy"}
+                    maxRetries={3}
                   />
                 </AspectRatio>
                 <CardContent className="pt-6">

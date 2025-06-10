@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import useEmblaCarousel from "embla-carousel-react"
-import Image from "next/image"
+import { ImageWithRetry } from "./image-with-retry";
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -129,15 +129,16 @@ export function Carousel({
             {images.map((image, index) => (
               <div className="flex-[0_0_100%] min-w-0 relative" key={index}>
                 <AspectRatio ratio={aspectRatio}>
-                  <Image
+                  <ImageWithRetry
                     src={image.src}
                     alt={image.alt}
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     priority={index === 0}
-                    onLoad={onImageLoad}
-                    onError={onImageError}
+                    onImageLoad={onImageLoad}
+                    onImageError={onImageError}
+                    maxRetries={3}
                   />
                 </AspectRatio>
               </div>
@@ -176,14 +177,15 @@ export function Carousel({
                 onClick={() => onThumbClick(index)}
               >
                 <AspectRatio ratio={1}>
-                  <Image
+                  <ImageWithRetry
                     src={image.src}
                     alt={`Miniatura ${index + 1}`}
                     fill
                     className="object-cover rounded-sm"
-                    onLoad={onImageLoad}
-                    onError={onImageError}
+                    onImageLoad={onImageLoad}
+                    onImageError={onImageError}
                     loading="lazy"
+                    maxRetries={3}
                   />
                 </AspectRatio>
               </div>
