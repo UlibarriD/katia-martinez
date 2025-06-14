@@ -105,22 +105,22 @@ export default function SessionDetailClient({ sesion }: SessionDetailProps) {
 
             <div className="flex flex-col gap-3 my-6">
               <div className="flex items-center gap-2 text-muted-foreground">
-                <User className="h-4 w-4" />
-                <span>Modelo: {sesion.modelo}</span>
-              </div>
-
-              <div className="flex items-center gap-2 text-muted-foreground">
                 <Camera className="h-4 w-4" />
                 <span>{sesion.fotografia}</span>
               </div>
 
               <div className="flex items-center gap-2 text-muted-foreground">
-                <span>MUA: {sesion.mua}</span>
+                <Brush className="h-4 w-4" />
+                <span>Estilismo: {sesion.estilismo}</span>
               </div>
 
               <div className="flex items-center gap-2 text-muted-foreground">
-                <Brush className="h-4 w-4" />
-                <span>Estilismo: {sesion.estilismo}</span>
+                <User className="h-4 w-4" />
+                <span>Modelo: {sesion.modelo}</span>
+              </div>
+
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <span>MUA: {sesion.mua}</span>
               </div>
             </div>
 

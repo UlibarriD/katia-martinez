@@ -21,10 +21,6 @@ const navItems = [
     title: "Proyectos",
     href: "/proyectos",
   },
-  {
-    title: "Contacto",
-    href: "/contacto",
-  },
 ];
 
 export function Navbar() {

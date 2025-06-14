@@ -50,7 +50,7 @@ export const SESIONES: Sesion[] = [
     modelo: "Javier Bragado",
     mua: "Raquel Aranjuez",
     descripcion:
-      "Chaqueta negra: belstaff\nChubasquero: Ralph Lauren \nBotas:  PENDIENTE DIEGO\nPANTALON : PENDIENTE DIEGO",
+      "Chaqueta negra: belstaff\nChubasquero: Ralph Lauren \nBotas: Camper",
 
     imagenes: [
       {
@@ -74,8 +74,7 @@ export const SESIONES: Sesion[] = [
     estilismo: "Katia Martinez, Laura Exposito, Jessica Figueroa",
     modelo: "Carmen Rubio",
     mua: "David Pelaez",
-    descripcion:
-      "Vestido: Zara\nGafas: PENDIENTE DIEGO \nAccesorios vintage\nZapatos Bershka ",
+    descripcion: "Vestido: Zara\nAccesorios vintage\nZapatos Bershka ",
 
     imagenes: [
       {
@@ -203,6 +202,79 @@ export const SESIONES: Sesion[] = [
       {
         src: "/Produccion/Produccion 2.webp",
         alt: "Produccion 2",
+      },
+    ],
+  },
+  {
+    id: "Red_Carpet",
+    titulo: "RED CARPET",
+    fotografia: "Paula Diaz",
+    estilismo: "Katia Martinez, Laura Exposito, Carmen Quesada",
+    modelo: "Irinia Carchenilla",
+    mua: "Talia Cuesta",
+    descripcion: "Vestido: Ernesto Naranjo\nZapatos: Aquazzura",
+
+    imagenes: [
+      {
+        src: "/Red_Carpet/red_carpet 1.webp",
+        alt: "Red_Carpet 1",
+      },
+      {
+        src: "/Red_Carpet/red_carpet 2.webp",
+        alt: "Red_Carpet 2",
+      },
+      {
+        src: "/Red_Carpet/red_carpet 3.webp",
+        alt: "Red_Carpet 3",
+      },
+      {
+        src: "/Red_Carpet/red_carpet 4.webp",
+        alt: "Red_Carpet 4",
+      },
+      {
+        src: "/Red_Carpet/red_carpet 5.webp",
+        alt: "Red_Carpet 5",
+      },
+      {
+        src: "/Red_Carpet/red_carpet 6.webp",
+        alt: "Red_Carpet 6",
+      },
+    ],
+  },
+  {
+    id: "Bread_Element",
+    titulo: "BREAD ELEMENT",
+    fotografia: "Paula Diaz",
+    estilismo: "Katia Martinez, Laura Exposito, Carmen Quesada",
+    modelo: "Malia Struve",
+    mua: "Raquel Aragues",
+    descripcion:
+      "Jersey: Nude Project\nShort: Nude Project\nGafas: Pull&bear\nMedias: Calzedonia",
+
+    imagenes: [
+      {
+        src: "/Bread/bread_element 1.webp",
+        alt: "Bread_Element 1",
+      },
+      {
+        src: "/Bread/bread_element 2.webp",
+        alt: "Bread_Element 2",
+      },
+      {
+        src: "/Bread/bread_element 3.webp",
+        alt: "Bread_Element 3",
+      },
+      {
+        src: "/Bread/bread_element 4.webp",
+        alt: "Bread_Element 4",
+      },
+      {
+        src: "/Bread/bread_element 5.webp",
+        alt: "Bread_Element 5",
+      },
+      {
+        src: "/Bread/bread_element 6.webp",
+        alt: "Bread_Element 6",
       },
     ],
   },

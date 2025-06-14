@@ -74,13 +74,8 @@ export default function SesionesPage() {
       >
         <div className="text-center max-w-3xl mx-auto">
           <h1 className="font-heading text-3xl md:text-5xl font-bold mb-6">
-            Proyectos Fotográficos
+            Proyectos
           </h1>
-          <p className="text-lg text-muted-foreground mb-8">
-            Explora mi portafolio de trabajos. Cada proyecto ha sido
-            cuidadosamente planeado y ejecutado para capturar la esencia de cada
-            momento.
-          </p>
           <Separator className="my-10 max-w-md mx-auto" />
         </div>
 
